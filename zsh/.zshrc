@@ -6,7 +6,14 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 export ZSH="/Users/toanduong/.oh-my-zsh"
-export EDITOR='vim'
+export EDITOR='mvim'
+export MYVIMRC="/Users/toanduong/.config/vim/.vimrc"
+export VIMINIT="source /Users/toanduong/.config/vim/.vimrc"
+
+# fzf options
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_DEFAULT_COMMAND='rg --files'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # vi mode cursor mode
 MODE_CURSOR_VIINS="#00ff00 blinking bar"
@@ -30,10 +37,6 @@ bindkey -s '^o' 'lfcd\n'
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting zsh-vim-mode)
 
-# aliases
-alias ezsh="vim ~/.config/zsh/.zshrc"
-alias szsh="source ~/.config/zsh/.zshrc"
-
 source $ZSH/oh-my-zsh.sh
 
 test -e "${ZDOTDIR}/.iterm2_shell_integration.zsh" && source "${ZDOTDIR}/.iterm2_shell_integration.zsh"
@@ -48,6 +51,25 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
 
-# move alias here so it cannot be overriden
+open_mvim () {
+    mvim $1; exit
+}
+
+# aliases for quickly edit and source config files
+alias ez="open_mvim ~/.config/zsh/.zshrc"
+alias ev="open_mvim ~/.config/vim/.vimrc"
+alias sz="source ~/.config/zsh/.zshrc"
+
+alias v="open_mvim"
+alias vim="open_mvim"
+alias vi="open_mvim"
+
 alias ls="ls -la"
 
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+export PATH="/opt/homebrew/opt/icu4c/bin:$PATH"
+export PATH="/opt/homebrew/opt/icu4c/sbin:$PATH"
+export LDFLAGS="-L/opt/homebrew/opt/icu4c/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/icu4c/include"
+export PATH="/opt/homebrew/opt/m4/bin:$PATH"
